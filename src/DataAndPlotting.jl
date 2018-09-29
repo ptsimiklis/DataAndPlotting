@@ -1,14 +1,15 @@
 module DataAndPlotting
 
 using HDF5
+using Plots
 
 # wave params
 const ki = 3
-const kj = 3
+const kj = 4
 
 # grid size
-const ni = 30
-const nj = 20
+const ni = 300
+const nj = 200
 
 function index2coord(i, ni)
    @assert ni > 1
@@ -42,6 +43,14 @@ end
 export input
 function input(filename::String)
     arr = h5read(filename, "data") 
+end
+
+# create plot
+
+export makeplot
+function makeplot(arr::Array{Float64,2}, filename::String)
+    heatmap(arr, clim = (-1.0, 1.0), color =:viridis)
+    savefig(filename)
 end
 
 
